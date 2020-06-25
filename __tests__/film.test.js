@@ -8,7 +8,7 @@ const Film = require('../lib/models/Film');
 describe('Film Routes', async() => {
     
   it.only('gets all films via GET', async() => {
-    const films = prepare(await Film.find().select({ title: true, released: true }).populate('studios.name'));
+    const films = prepare(await Film.find().select({ title: true, released: true }).populate('studio', { name: true }));
     //ask TA about if .populate is working properly?
     console.log(films);
     return request(app)
