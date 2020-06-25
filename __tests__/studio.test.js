@@ -17,5 +17,13 @@ describe('Studio routes', async() => {
       });
   });
 
+  it('gets a studio by ID', async() => {
+    const studio = prepare(await Studio.findOne());
 
+    return request(app)
+      .get(`/api/v1/studios/${studio._id}`)
+      .then(res => {
+        expect(res.body).toEqual(studio);
+      });
+  });
 });
