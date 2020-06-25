@@ -17,5 +17,13 @@ describe('Actor routes', async() => {
       });
   });
 
-  
+  it('gets an actor by ID', async() => {
+    const actor = prepare(await Actor.findOne());
+
+    return request(app)
+      .get(`/api/v1/actors/${actor._id}`)
+      .then(res => {
+        expect(res.body).toEqual(actor);
+      });
+  });
 });
