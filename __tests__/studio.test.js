@@ -18,8 +18,11 @@ describe('Studio routes', async() => {
   });
 
   it('gets a studio by ID', async() => {
-    const studio = prepare(await Studio.findOne());
-
+    const studio = prepare(await Studio
+      .findOne()
+      .populate('films', { title: true, studio: true })
+    );
+    console.log(studio);
     return request(app)
       .get(`/api/v1/studios/${studio._id}`)
       .then(res => {
