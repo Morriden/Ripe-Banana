@@ -22,7 +22,6 @@ describe('Studio routes', async() => {
       .findOne()
       .populate('films', { title: true, studio: true })
     );
-    console.log(studio);
     return request(app)
       .get(`/api/v1/studios/${studio._id}`)
       .then(res => {

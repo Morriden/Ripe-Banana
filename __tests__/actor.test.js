@@ -18,7 +18,9 @@ describe('Actor routes', async() => {
   });
 
   it('gets an actor by ID', async() => {
-    const actor = prepare(await Actor.findOne());
+    const actor = prepare(await Actor
+      .findOne()
+      .populate('films', { title: true, released: true }));
 
     return request(app)
       .get(`/api/v1/actors/${actor._id}`)
