@@ -28,4 +28,33 @@ describe('Actor routes', async() => {
         expect(res.body).toEqual(actor);
       });
   });
+
+  it('posts an actor with the post route', async() => {
+    return request(app)
+      .post('/api/v1/actors/')
+      .send({
+        name: 'Bobby Hill',
+        dob: '2020-01-01',
+        pob: {
+          city: 'Portland',
+          state: 'Oregon',
+          country: 'USA'
+        }
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          name: 'Bobby Hill',
+          dob: '2020-01-01T00:00:00.000Z',
+          id: expect.anything(),
+          pob: [{
+            _id: expect.anything(),
+            city: 'Portland',
+            state: 'Oregon',
+            country: 'USA'
+          }],
+          __v: 0
+        });
+      });
+  });
 });

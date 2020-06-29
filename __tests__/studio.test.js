@@ -28,4 +28,27 @@ describe('Studio routes', async() => {
         expect(res.body).toEqual(studio);
       });
   });
+
+  it.only('posts a studio with the post route', async() => {
+    return request(app)
+      .post('/api/v1/studios')
+      .send({
+        name: 'WindStalkers',
+        address: [{
+          city: 'Portland',
+          state: 'Oregon',
+          country: 'USA'
+        }]
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'WindStalkers',
+          address: [{
+            city: 'Portland',
+            state: 'Oregon',
+            country: 'USA'
+          }]
+        });
+      });
+  });
 });
