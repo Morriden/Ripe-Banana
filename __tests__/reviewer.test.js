@@ -92,7 +92,7 @@ describe('Reviewer routes', async() => {
       name: 'Erik',
       company: 'Alchemy',
     });
-    const review = await Review.create({
+    await Review.create({
       reviewer: reviewer._id,
       film: film._id,
       rating: 1,
