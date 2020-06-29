@@ -26,4 +26,22 @@ describe('Reviewer routes', async() => {
         expect(res.body).toEqual(reviewer);
       });
   });
+
+  it.only('creates a reviewer with post route', async() => {
+    return request(app)
+      .post('/api/v1/reviewers/')
+      .send({
+        name: 'Erik',
+        company: 'alchemy'
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          name: 'Erik',
+          company: 'alchemy',
+          __v: 0,
+          id: expect.anything()
+        });
+      });
+  });
 });
