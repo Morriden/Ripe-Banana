@@ -4,6 +4,8 @@ const request = require('supertest');
 const app = require('../lib/app');
 
 const Film = require('../lib/models/Film');
+const Studio = require('../lib/models/Studio');
+const Actor = require('../lib/models/Actor');
 
 describe('Film Routes', () => {
     
@@ -16,7 +18,7 @@ describe('Film Routes', () => {
       });
   });
 
-  it.only('gets a film via get id', async() => {
+  it('gets a film via get id', async() => {
     const film = prepare(await Film
       .findOne()
       .populate('studio', { name: true })
@@ -31,6 +33,38 @@ describe('Film Routes', () => {
       .get(`/api/v1/films/${film._id}`)
       .then(res => {
         expect(res.body).toEqual(film);
+      });
+  });
+
+  it('creates a film by the post route', async() => {
+    const studio = prepare(await Studio.findOne());
+    const actor = prepare(await Actor.findOne());
+
+    return request(app)
+      .post('/api/v1/films')
+      .send({
+        title: 'Movie',
+        released: 1990,
+        cast: [{
+          actor: actor.id,
+          role: 'Heroine'
+        }],
+        studio: studio.id
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          __v: 0,
+          _id: expect.anything(),
+          title: 'Movie',
+          released: 1990,
+          cast: [{
+            _id: expect.anything(),
+            actor: actor.id,
+            role: 'Heroine'
+          }],
+          id: expect.anything(),
+          studio: studio.id
+        });
       });
   });
 });
