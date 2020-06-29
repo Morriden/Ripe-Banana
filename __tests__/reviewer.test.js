@@ -27,7 +27,7 @@ describe('Reviewer routes', async() => {
       });
   });
 
-  it.only('creates a reviewer with post route', async() => {
+  it('creates a reviewer with post route', async() => {
     return request(app)
       .post('/api/v1/reviewers/')
       .send({
